@@ -1,0 +1,144 @@
+/**
+ * Min Zheng mzheng2@bsu.edu
+ */
+import java.util.Scanner;
+import java.util.Random;
+
+public class TheGameOfPig {
+
+	static Boolean playerOne = true;
+	static Boolean playerTwo = true;
+	static int oPoints = 0;
+	static int tPoints = 0;
+	static int oBank = 0;
+	static int tBank = 0;
+	static int dice;
+
+	public static void main(String[] args) {
+		System.out.println("Welcome to The Game of Pig!");
+		new TheGameOfPig();
+	}
+
+	private TheGameOfPig() {
+		game();
+		if (!playerOne) {
+			playerTwo();
+		}
+	}
+
+	private static void game() {
+		System.out.println("IT IS PLAYER ONE'S TURN.");
+		printInfo();
+		System.out.println("Press press any key to roll.");
+		Scanner input = new Scanner(System.in);
+		String play = input.nextLine();
+		while (playerOne) {
+			roll();
+			if (dice == 1) {
+				if (oBank >= 100) {
+					oWinner();
+				}
+				System.out.println("You have rolled a 1. Your turn is over.");
+				oZero();
+				tZero();
+				printInfo();
+				playerTwo();
+			} else {
+				oPoints += dice;
+				System.out.println("You have rolled a " + dice + ".");
+				System.out.println("Player One's Current: " + oPoints + " points");
+				printInfo();
+				if (oBank >= 100) {
+					oWinner();
+				}
+				System.out
+						.println("Press any key to roll or 'b' to bank points.");
+				String choice = input.nextLine();
+				if (choice.equals("b")) {
+					oBank += oPoints;
+					oZero();
+					tZero();
+					if (oBank >= 100) {
+						oWinner();
+					}
+					playerTwo();
+				} else {
+					roll();
+				}
+			}
+		}
+	}
+
+	private static void playerTwo() {
+		System.out.println("IT IS PLAYER TWO's TURN.");
+		printInfo();
+		System.out.println("Press any key to roll.");
+		Scanner input = new Scanner(System.in);
+		String play = input.nextLine();
+		while (playerTwo) {
+			roll();
+			if (dice == 1) {
+				if (tBank >= 100) {
+					tWinner();
+				}
+				System.out.println("You have rolled a 1. Your turn is over.");
+				tZero();
+				oZero();
+				printInfo();
+				game();
+			} else {
+				tPoints += dice;
+				System.out.println("You have rolled a " + dice + ".");
+				System.out.println("Player Two's Current: " + tPoints + " points");
+				printInfo();
+				if (tBank >= 100) {
+					tWinner();
+				}
+				System.out
+						.println("Press any key to roll or 'b' to bank points.");
+				String choice = input.nextLine();
+				if (choice.equals("b")) {
+					tBank += tPoints;
+					tZero();
+					oZero();
+					if (tBank >= 100) {
+						tWinner();
+					}
+					game();
+				} else {
+					roll();
+				}
+			}
+		}
+	}
+
+	private static int roll() {
+		Random rand = new Random();
+		dice = rand.nextInt(6) + 1;
+		return dice;
+	}
+
+	private static int oZero() {
+		oPoints = 0;
+		return oPoints;
+	}
+
+	private static int tZero() {
+		tPoints = 0;
+		return tPoints;
+	}
+	private static void oWinner(){
+		System.out.println("Player One has won with " + oBank + " points");
+		printInfo();
+		System.exit(0);
+	}
+	private static void tWinner(){
+		System.out.println("Player Two has won with " + tBank + " points");
+		printInfo();
+		System.exit(0);
+	}
+	private static void printInfo() {
+		System.out.println("Player One's Bank: " + oBank + " points");
+		System.out.println("Player Two's Bank: " + tBank + " points");
+	}
+}
