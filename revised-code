@@ -41,10 +41,16 @@ import java.util.*;
 
 public class Player {
 
+	private Scanner keyboard;
+	private String reply;
+	private String playerName;
 	private int playersCurrentPoints;
+	private int playersBankPoints;
 	private int dice;
 
 	public Player(String playerName, int playersBankPoints){
+		this.playerName = playerName;
+		this.playersBankPoints = playersBankPoints;
 		callPlayersName();
 		playerMustRoll();
 		playerReply();
