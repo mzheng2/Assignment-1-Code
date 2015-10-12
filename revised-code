@@ -13,12 +13,12 @@ public class Game {
 			printPlayerScores(playerOnesName, playerTwosName,
 					playerOnesBankPoints, playerTwosBankPoints);
 			playerOnesBankPoints = One(playerOnesName,
-					playerOnesBankPoints, turn);
+					playerOnesBankPoints).turn(turn);
 			turn = true;
 			printPlayerScores(playerOnesName, playerTwosName,
 					playerOnesBankPoints, playerTwosBankPoints);
 			playerTwosBankPoints = Two(playerTwosName,
-					playerTwosBankPoints, turn);
+					playerTwosBankPoints).turn(turn);
 			turn = true;
 		}
 	}
@@ -44,15 +44,13 @@ public class Player {
 	private int playersCurrentPoints;
 	private int dice;
 
-	public Player(String playerName, int playersBankPoints,
-			boolean playersTurn){
+	public Player(String playerName, int playersBankPoints){
 		callPlayersName();
 		playerMustRoll();
 		playerReply();
-		turn(playerTurn);
 	}
 
-	public void turn(){
+	public void turn(boolean playerTurn){
 		while (playersTurn == true) {
 			rollDice();
 			if (dice == 1) {
