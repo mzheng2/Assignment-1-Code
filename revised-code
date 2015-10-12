@@ -50,7 +50,7 @@ public class Player {
 		playerReply();
 	}
 
-	public void turn(boolean playerTurn){
+	public int turn(boolean playerTurn){
 		while (playersTurn == true) {
 			rollDice();
 			if (dice == 1) {
